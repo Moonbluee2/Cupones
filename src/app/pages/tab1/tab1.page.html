@@ -1,0 +1,60 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="ion-text-center">
+      Mis cupones
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+
+  <ion-segment value="candies">
+    <ion-segment-button value="candies">
+      <ion-label>Dulces</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="drinks">
+      <ion-label>Bebidas</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="meats">
+      <ion-label>Carnes</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- Candies -->
+  <ng-container
+    [ngTemplateOutlet]="couponTemplate"
+    [ngTemplateOutletContext]="{ category: 'candies' }">
+  </ng-container>
+
+  <!-- Drinks -->
+  <ng-container
+    [ngTemplateOutlet]="couponTemplate"
+    [ngTemplateOutletContext]="{ category: 'drinks' }">
+  </ng-container>
+
+  <!-- Meats -->
+  <ng-container
+    [ngTemplateOutlet]="couponTemplate"
+    [ngTemplateOutletContext]="{ category: 'meats' }">
+  </ng-container>
+
+  <!-- Template reutilizable para las tarjetas -->
+  <ng-template #couponTemplate let-category="category">
+    <ion-grid>
+      <ion-row>
+        @for (coupon of coupons | filterCouponCategory: category; track coupon.idProduct) {
+          <ion-col size="6">
+            <ion-card class="rounded">
+              <ion-img [src]="coupon.img"></ion-img>
+              <ion-card-header class="ion-text-center">
+                <ion-card-subtitle>{{ coupon.name }}</ion-card-subtitle>
+                <ion-card-title>{{ coupon.discount }}%</ion-card-title>
+              </ion-card-header>
+            </ion-card>
+          </ion-col>
+        }
+      </ion-row>
+    </ion-grid>
+  </ng-template>
+
+</ion-content>
